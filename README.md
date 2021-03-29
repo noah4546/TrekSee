@@ -15,7 +15,7 @@ You can install them by using the command `yarn add` then the component name.
 * react-router-dom
 * react-bootstrap
 * bootstrap
-* react-google-maps
+* @react-google-maps/api
 * jquery
 * popper.js
 * react-router-bootstrap
@@ -25,3 +25,5 @@ You can install them by using the command `yarn add` then the component name.
     I Noah Tomkins, 000790079 certify that this material is my original work. 
     No other person’s work has been used without due acknowledgement. 
     I have not made my work available to anyone else.
+
+react-bootstrap bootstrap react-google-maps jquery popper.js react-router-bootstrap

@@ -1,28 +1,38 @@
 import React from 'react';
-import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
+import { GoogleMap, LoadScript } from '@react-google-maps/api';
 import { googleMapAPI } from '../config.json';
+import './Home.css';
+  
+const center = {
+    lat: -3.745,
+    lng: -38.523
+};
 
-const MyMapComponent = withScriptjs(withGoogleMap((props) =>
-  <GoogleMap
-    defaultZoom={8}
-    defaultCenter={{ lat: -34.397, lng: 150.644 }}
-  >
-    {props.isMarkerShown && <Marker position={{ lat: -34.397, lng: 150.644 }} />}
-  </GoogleMap>
-))
+class Map extends React.Component {
+    render() {
+      return (
+        <LoadScript
+          googleMapsApiKey={googleMapAPI}
+        >
+          <GoogleMap
+            mapContainerClassName="map"
+            center={center}
+            zoom={10}
+          >
+            { /* Child components, such as markers, info windows, etc. */ }
+            <></>
+          </GoogleMap>
+        </LoadScript>
+      )
+    }
+  }
 
 class Home extends React.Component {
 
     render() {
         return(
             <div>
-                <MyMapComponent
-                    isMarkerShown
-                    googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${googleMapAPI}&v=3.exp&libraries=geometry,drawing,places`}
-                    loadingElement={<div style={{ height: `100%` }} />}
-                    containerElement={<div style={{ height: `calc(100vh - 62px)` }} />}
-                    mapElement={<div style={{ height: `100%` }} />}
-                />
+                <Map />
             </div>
         )
     }
