@@ -10,15 +10,8 @@ class PlacesForm extends React.Component {
     constructor(props) {
         super(props);
 
-        let checkboxes = this.props.places.map(place => {
-            return {
-                place: place,
-                value: false
-            }
-        });
-
         this.state = {
-            checkboxes: checkboxes
+            checkboxes: []
         }
     }
 
@@ -31,7 +24,18 @@ class PlacesForm extends React.Component {
         this.props.onChange(this.state.checkboxes);
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        let places = await API.getAllPlaces();
+
+        let checkboxes = places.map(place => {
+            return {
+                place: place,
+                value: false
+            }
+        });
+
+        this.setState({checkboxes: checkboxes});
+
         this.props.onChange(this.state.checkboxes);
     }
 
@@ -60,7 +64,8 @@ class OptionsMenu extends React.Component {
         this.state = {
             mode: "walk",
             radius: 0,
-            checkboxes: []
+            checkboxes: [],
+            places: []
         }
     }
 
@@ -126,7 +131,6 @@ class OptionsMenu extends React.Component {
                 <div className="places-select py-2 mx-4">
                     <p className="text-center">Places</p>
                     <PlacesForm 
-                        places={API.getAllPlaces()}
                         onChange={this.handleCheckboxChange.bind(this)}
                     />
                 </div>
