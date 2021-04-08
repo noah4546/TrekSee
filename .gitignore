@@ -24,3 +24,4 @@ yarn-error.log*
 
 # config files
 /src/config.json
+/public/php/config.php

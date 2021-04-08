@@ -4,6 +4,7 @@ import { ReactComponent as Bike } from './images/bike.svg';
 import { ReactComponent as Car } from './images/car.svg';
 import './OptionsMenu.css';
 import { FormCheck, FormControl } from 'react-bootstrap';
+import API from '../../API';
 
 class PlacesForm extends React.Component {
     constructor(props) {
@@ -125,15 +126,7 @@ class OptionsMenu extends React.Component {
                 <div className="places-select py-2 mx-4">
                     <p className="text-center">Places</p>
                     <PlacesForm 
-                        places={[
-                            "Parks",
-                            "Museums",
-                            "Attractions",
-                            "Historical Buildings",
-                            "Sports",
-                            "Event Spaces",
-                            "Art"
-                        ]}
+                        places={API.getAllPlaces()}
                         onChange={this.handleCheckboxChange.bind(this)}
                     />
                 </div>
