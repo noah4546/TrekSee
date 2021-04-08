@@ -3,6 +3,7 @@ import { Circle, GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import { googleMapAPI } from '../config.json';
 import './Home.css';
 import OptionsMenu from './components/OptionsMenu';
+import API from '../API';
 
 const mapOptions = {
     styles: [
@@ -41,9 +42,12 @@ class Map extends React.Component {
         }
     }
 
-    handleTrekOptionsUpdate(options) {
+    async handleTrekOptionsUpdate(options) {
         this.setState({trekOptions: options});
         this.setState({circleOptions: {radius: Number(options.radius)}});
+
+        let google = await API.getGooglePlaces("Park", this.state.currentLocation, this.state.trekOptions.radius);
+        console.log(google);
     }
 
     componentDidMount() {
