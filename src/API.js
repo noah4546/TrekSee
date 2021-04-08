@@ -4,7 +4,7 @@ export default class API {
 
     static async getAllPlaces() {
         try {
-            let response = await fetch(`${baseUrl}/getPlaces.php`);
+            let response = await fetch(`${baseUrl}getPlaces.php`);
             let places = await response.json();
             return places;
         } catch (error) {
