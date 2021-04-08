@@ -3,22 +3,8 @@
 ## Getting Started
 
 1. Clone or download the repository
-2. Install all of the node modules shown bellow
-3. Run `yarn upgrade`
-4. Run locally with a deployment server using `yarn start`
-
-### Node Modules
-
-You must install the following node modules to allow this app to work.
-You can install them by using the command `yarn add` then the component name.
-
-* react-router-dom
-* react-bootstrap
-* bootstrap
-* @react-google-maps/api
-* jquery
-* popper.js
-* react-router-bootstrap
+2. Run `yarn install`
+3. Run locally with a deployment server using `yarn start`
 
 ## Statement of authorship
 

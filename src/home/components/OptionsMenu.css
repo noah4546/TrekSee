@@ -1,0 +1,49 @@
+.options-menu {
+    position: absolute;
+    top: 60px;
+    right: 0px;
+    height: 450px;
+    width: 300px;
+    border: 1px solid #0022FF;
+    border-radius: 20px 0 0 20px;
+    border-style: solid none solid solid;
+    background-color: #F8F8F8;
+}
+
+.options-menu label,
+.options-menu p {
+    font-weight: 400;
+    font-size: 1.2em;
+}
+
+.mode-select-item:hover svg {
+    fill: blue;
+}
+
+.mode-select svg {
+    height: 30px;
+    display: block;
+    margin: auto;
+}
+
+.mode-select {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.radius-select {
+    border-bottom: 1px solid #707070;
+}
+
+.places-select .checkboxes {
+    margin-left: 40px;
+}
+
+.places-select .checkboxes .form-check-input {
+    margin-top: 8px;
+    transform: scale(1.5);
+}
+
+.places-select .checkboxes label {
+    margin-left: 8px;
+}
