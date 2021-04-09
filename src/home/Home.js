@@ -19,6 +19,10 @@ const mapOptions = {
     ]
 };
 
+const pinIcons = {
+    gray: "https://www.google.ca/maps/vt/icon/name=assets/icons/poi/tactile/pinlet_shadow_v3-2-medium.png,assets/icons/poi/tactile/pinlet_outline_v3-2-medium.png,assets/icons/poi/tactile/pinlet_v3-2-medium.png,assets/icons/poi/quantum/pinlet/dot_pinlet-2-medium.png&highlight=ff000000,ffffff,78909c,ffffff?scale=1"
+};
+
 class Map extends React.Component {
     constructor(props) {
         super(props);
@@ -84,7 +88,7 @@ class Map extends React.Component {
             />
             <Marker 
                 position={this.state.currentLocation}
-                icon="https://www.google.ca/maps/vt/icon/name=assets/icons/poi/tactile/pinlet_shadow_v3-2-medium.png,assets/icons/poi/tactile/pinlet_outline_v3-2-medium.png,assets/icons/poi/tactile/pinlet_v3-2-medium.png,assets/icons/poi/quantum/pinlet/dot_pinlet-2-medium.png&highlight=ff000000,ffffff,78909c,ffffff?scale=1"
+                icon={pinIcons.gray}
             />
             <Circle 
                 center={this.state.currentLocation}

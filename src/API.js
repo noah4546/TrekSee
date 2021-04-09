@@ -1,7 +1,7 @@
 import { googleMapAPI } from './config.json';
 
 const baseUrl = "https://treksee.tnoah.ca/php/";
-const placesAPIbaseUrl = "https://maps.googleapis.com/maps/api/place/textsearch/";
+const placesAPIbaseUrl = "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/textsearch/";
 
 export default class API {
 
@@ -17,12 +17,7 @@ export default class API {
     }
 
     static async getGooglePlaces(query, location, radius) {
-        let url = `${placesAPIbaseUrl}json?
-        query=${query}&
-        location=${location.lat},${location.lng}&
-        radius=${radius}&
-        key=${googleMapAPI}`;
-
+        let url = `${placesAPIbaseUrl}json?query=${query}&location=${location.lat},${location.lng}&radius=${radius}&key=${googleMapAPI}`;
         let response = await fetch(url);
         let places = await response.json();
         return places;
