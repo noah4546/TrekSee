@@ -4,6 +4,7 @@ import { googleMapAPI } from '../config.json';
 import './Home.css';
 import OptionsMenu from './components/OptionsMenu';
 import API from '../API';
+import InfoMenu from './components/InfoMenu';
 
 const mapOptions = {
     styles: [
@@ -16,12 +17,26 @@ const mapOptions = {
             elementType: "labels.icon",
             stylers: [{ visibility: "off" }],
         },
-    ]
+    ],
+    disableDefaultUI: true,
 };
 
 const pinIcons = {
     gray: "https://www.google.ca/maps/vt/icon/name=assets/icons/poi/tactile/pinlet_shadow_v3-2-medium.png,assets/icons/poi/tactile/pinlet_outline_v3-2-medium.png,assets/icons/poi/tactile/pinlet_v3-2-medium.png,assets/icons/poi/quantum/pinlet/dot_pinlet-2-medium.png&highlight=ff000000,ffffff,78909c,ffffff?scale=1"
 };
+
+const CNTowerInfo = {
+    name: "CN Tower",
+    img: "https://lh5.googleusercontent.com/p/AF1QipMjQHytFcxkpFfm5sEZjgewovTW7xRK4T64kzbr=w203-h367-k-no",
+    type: "Tourist attraction",
+    info: "Landmark, over 553-metre tower featuring a glass floor & a revolving eatery with panoramic views.",
+    hours: {
+        open: "10am",
+        close: "10pm",
+    },
+    website: "https://www.cntower.ca/intro.html",
+    phone: "(416) 792-6397"
+}
 
 class Map extends React.Component {
     constructor(props) {
@@ -42,13 +57,14 @@ class Map extends React.Component {
             },
             trekOptions: {
 
-            }
+            },
+            selectedLocation: CNTowerInfo
         }
     }
 
     async handleTrekOptionsUpdate(options) {
         this.setState({trekOptions: options});
-        this.setState({circleOptions: {radius: Number(options.radius)}});
+        this.setState({circleOptions: {radius: Number(options.radius*1000)}});
 
         let google = await API.getGooglePlaces("Park", this.state.currentLocation, this.state.trekOptions.radius);
         console.log(google);
@@ -83,6 +99,9 @@ class Map extends React.Component {
             options={mapOptions}
           >
 
+            <InfoMenu 
+                info={this.state.selectedLocation}
+            />
             <OptionsMenu 
                 onChange={this.handleTrekOptionsUpdate.bind(this)}
             />

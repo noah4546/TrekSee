@@ -3,7 +3,7 @@ import { ReactComponent as Walk } from './images/walk.svg';
 import { ReactComponent as Bike } from './images/bike.svg';
 import { ReactComponent as Car } from './images/car.svg';
 import './OptionsMenu.css';
-import { FormCheck, FormControl } from 'react-bootstrap';
+import { Button, FormCheck, FormControl } from 'react-bootstrap';
 import API from '../../API';
 
 class PlacesForm extends React.Component {
@@ -87,9 +87,10 @@ class OptionsMenu extends React.Component {
     async handleRadiusChange(event) {
         let radius = event.target.value;
 
-        if (radius >= 0 && radius <= 10000) {
+        if (radius >= 0 && radius <= 100) {
             await this.setState({radius: radius});
         }
+
         this.props.onChange(this.state);
     }
 
@@ -105,7 +106,7 @@ class OptionsMenu extends React.Component {
     render() {
         return(
             <div className="options-menu py-2">
-                <h2 className="text-center">Find a Trek</h2>
+                <h3 className="text-center">Find a Trek</h3>
                 <div className="mode-select pt-3 mx-4">
                     <label>Mode</label>
                     <div className="mode-select-item" onClick={this.handleSelectWalk.bind(this)}>
@@ -124,15 +125,21 @@ class OptionsMenu extends React.Component {
                         type="number"
                         value={this.state.radius}
                         className="col-5"
+                        step="0.2"
                         onChange={this.handleRadiusChange.bind(this)}
                     />
-                    <label className="col-3 pt-1">meters</label>
+                    <label className="col-3 pt-1">Km</label>
                 </div>
                 <div className="places-select py-2 mx-4">
                     <p className="text-center">Places</p>
                     <PlacesForm 
                         onChange={this.handleCheckboxChange.bind(this)}
                     />
+                </div>
+                <div className="d-flex justify-content-center mt-2">
+                    <Button variant="primary" size="lg">
+                        Settings
+                    </Button>
                 </div>
             </div>
         );
