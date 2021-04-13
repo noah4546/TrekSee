@@ -16,11 +16,13 @@ class PlacesForm extends React.Component {
     }
 
     handleCheckboxChange(place) {
-        for (let i = 0; i < this.state.checkboxes.length; i++) {
-            if (place === this.state.checkboxes[i].place) {
-                this.state.checkboxes[i].value = !this.state.checkboxes[i].value;
+        let checkboxes = this.state.checkboxes;
+        for (let i = 0; i < checkboxes.length; i++) {
+            if (place === checkboxes[i].place) {
+                checkboxes[i].value = !checkboxes[i].value;
             }
         }
+        this.setState({checkboxes: checkboxes});
         this.props.onChange(this.state.checkboxes);
     }
 

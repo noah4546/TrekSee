@@ -26,16 +26,42 @@ const pinIcons = {
 };
 
 const CNTowerInfo = {
-    name: "CN Tower",
-    img: "https://lh5.googleusercontent.com/p/AF1QipMjQHytFcxkpFfm5sEZjgewovTW7xRK4T64kzbr=w203-h367-k-no",
-    type: "Tourist attraction",
-    info: "Landmark, over 553-metre tower featuring a glass floor & a revolving eatery with panoramic views.",
-    hours: {
-        open: "10am",
-        close: "10pm",
+    "id": "ef1ywilmP_yA_Ae_wD-mBQ",
+    "alias": "spencer-smith-park-burlington",
+    "name": "Spencer Smith Park",
+    "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/8y1FTizVAYXzUK03qjXR0w/o.jpg",
+    "is_closed": false,
+    "url": "https://www.yelp.com/biz/spencer-smith-park-burlington?adjust_creative=vvpjzzZkZX4FRpWnBayyGQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=vvpjzzZkZX4FRpWnBayyGQ",
+    "review_count": 12,
+    "categories": [
+        {
+            "alias": "parks",
+            "title": "Parks"
+        }
+    ],
+    "rating": 4.5,
+    "coordinates": {
+        "latitude": 43.3226051330566,
+        "longitude": -79.7984008789062
     },
-    website: "https://www.cntower.ca/intro.html",
-    phone: "(416) 792-6397"
+    "transactions": [],
+    "location": {
+        "address1": "1400 Lakeshore Road",
+        "address2": "",
+        "address3": "",
+        "city": "Burlington",
+        "zip_code": "L7S 2J1",
+        "country": "CA",
+        "state": "ON",
+        "display_address": [
+            "1400 Lakeshore Road",
+            "Burlington, ON L7S 2J1",
+            "Canada"
+        ]
+    },
+    "phone": "",
+    "display_phone": "",
+    "distance": 2626.651736106663
 }
 
 class Map extends React.Component {
@@ -55,10 +81,9 @@ class Map extends React.Component {
                 radius: 250,
                 zIndex: 1
             },
-            trekOptions: {
-
-            },
-            selectedLocation: CNTowerInfo
+            trekOptions: {},
+            selectedLocation: CNTowerInfo,
+            places: []
         }
     }
 
@@ -66,8 +91,36 @@ class Map extends React.Component {
         this.setState({trekOptions: options});
         this.setState({circleOptions: {radius: Number(options.radius*1000)}});
 
-        let google = await API.getGooglePlaces("Park", this.state.currentLocation, this.state.trekOptions.radius);
-        console.log(google);
+        let queries = [];
+
+        for (let i = 0; i < options.checkboxes.length; i++) {
+            if (options.checkboxes[i].value === true) {
+                queries.push(options.checkboxes[i].place);
+            }
+        } 
+
+        let yelp = await API.getYelpPlacesMultiple(queries, this.state.currentLocation, this.state.circleOptions.radius);
+        console.log(yelp);
+        this.setState({places: yelp});
+    }
+
+    handlePinClicked(location) {
+        this.setState({selectedLocation: location});
+    }
+
+    getAllPins() {
+        let pins = this.state.places.map(location => (
+            <Marker 
+                key={Math.random()*10000}
+                onClick={this.handlePinClicked.bind(this, location)}
+                position={{
+                    lat: location.coordinates.latitude,
+                    lng: location.coordinates.longitude
+                }}
+            />
+        ));
+
+        return pins;
     }
 
     componentDidMount() {
@@ -114,6 +167,7 @@ class Map extends React.Component {
                 options={this.state.circleOptions}
             />
 
+            {this.getAllPins()}
             <></>
           </GoogleMap>
         </LoadScript>
