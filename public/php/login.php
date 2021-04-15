@@ -11,11 +11,11 @@ if (!isset($_SESSION['loggedIn']) || !isset($_SESSION['username'])) {
     $_SESSION['username'] = "";
 }
 
-$username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_STRING);
+$email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_STRING);
 $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_STRING);
 
 $_SESSION['loggedIn'] = true;
-$_SESSION['username'] = $username;
+$_SESSION['email'] = $email;
 
 $json = [
     "success" => true

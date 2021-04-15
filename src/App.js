@@ -7,6 +7,8 @@ import { LinkContainer } from 'react-router-bootstrap';
 import './App.css';
 import Explore from './explore/Explore';
 import DatabaseAPI from './APIs/DatabaseAPI';
+import Login from './account/Login';
+import Signup from './account/Signup';
 
 class App extends React.Component {
     constructor(props) {
@@ -45,11 +47,21 @@ class App extends React.Component {
                         <Route path="/explore">
                             <Explore />
                         </Route>
-                        <Route path="/history" />
-                        <Route path="/saved" />
-                        <Route path="/login" />
-                        <Route path="/signup" />
-                        <Route path="/account" />
+                        <Route path="/history">
+
+                        </Route>
+                        <Route path="/saved">
+                            
+                        </Route>
+                        <Route path="/login">
+                            <Login />
+                        </Route>
+                        <Route path="/signup">
+                            <Signup />
+                        </Route>
+                        <Route path="/account">
+                            
+                        </Route>
                     </Switch>
                 </div>
             </Router>
@@ -76,7 +88,7 @@ class Header extends React.Component {
 
     render() {
         return(
-            <Navbar bg="light" expand="lg" className="px-5">
+            <Navbar bg="light" expand="lg" className="shadow p-2 bg-body rounded">
                 <LinkContainer to="/">
                     <Navbar.Brand>TrekSee</Navbar.Brand>
                 </LinkContainer>   
@@ -102,8 +114,12 @@ class Header extends React.Component {
                     </Form>
     
                     <div className="login-actions">
-                        <Button variant="success">Login</Button>
-                        <Button variant="primary">Signup</Button>
+                        <LinkContainer to="/login" >
+                            <Button variant="success">Login</Button>
+                        </LinkContainer>
+                        <LinkContainer to="/signup">
+                            <Button variant="primary">Signup</Button>
+                        </LinkContainer>  
                     </div>
                 </Navbar.Collapse>
             </Navbar>
