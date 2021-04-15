@@ -1,27 +1,15 @@
-import { yelpAPI } from './config.json';
+import { yelpAPI } from '../config.json';
 
-const baseUrl = "https://treksee.tnoah.ca/php/";
 const proxy = "https://tnoah.ca:8888/";
 const yelpBaseUrl = `${proxy}https://api.yelp.com/v3/businesses/`;
 
-export default class API {
-
-    static async getAllPlaces() {
-        try {
-            let response = await fetch(`${baseUrl}getPlaces.php`);
-            let places = await response.json();
-            return places;
-        } catch (error) {
-            console.log("Unable to connect to server, reverting to default places");
-            return ["Art","Attractions","Event Spaces","Historical Buildings","Museums","Parks","Sports"];
-        } 
-    }
+export default class YelpAPI {
 
     static async getYelpPlaces(query, location, radius) {
         
         if (radius == null || radius <= 0) return null;
 
-        let url = `${yelpBaseUrl}search?term=${query}&latitude=${location.lat}&longitude=${location.lng}&radius=${radius}`;
+        let url = `${yelpBaseUrl}search?categories=${query}&latitude=${location.lat}&longitude=${location.lng}&radius=${radius}`;
         let response = await fetch(url, {
             headers: {
                 "Authorization": yelpAPI
@@ -40,7 +28,9 @@ export default class API {
             
             if (response) {
                 for (let j = 0; j < response.length; j++) {
-                    places.push(response[j]);
+                    if (response[j].image_url !== "") {
+                        places.push(response[j]);
+                    }   
                 }
             }
         }

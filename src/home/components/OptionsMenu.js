@@ -4,7 +4,7 @@ import { ReactComponent as Bike } from './images/bike.svg';
 import { ReactComponent as Car } from './images/car.svg';
 import './OptionsMenu.css';
 import { Button, FormCheck, FormControl } from 'react-bootstrap';
-import API from '../../API';
+import DatabaseAPI from '../../APIs/DatabaseAPI';
 
 class PlacesForm extends React.Component {
     constructor(props) {
@@ -27,7 +27,7 @@ class PlacesForm extends React.Component {
     }
 
     async componentDidMount() {
-        let places = await API.getAllPlaces();
+        let places = await DatabaseAPI.getAllPlaces();
 
         let checkboxes = places.map(place => {
             return {
@@ -75,17 +75,14 @@ class OptionsMenu extends React.Component {
 
     handleSelectWalk() {
         this.setState({mode: "walk"});
-        this.props.onChange(this.state);
     }
 
     handleSelectBike() {
         this.setState({mode: "bike"});
-        this.props.onChange(this.state);
     }
 
     handleSelectCar() {
         this.setState({mode: "car"});
-        this.props.onChange(this.state);
     }
 
     async handleRadiusChange(event) {
@@ -95,11 +92,14 @@ class OptionsMenu extends React.Component {
             await this.setState({radius: radius});
         }
 
-        this.props.onChange(this.state);
+        this.props.onRadiusChange(this.state.radius);
     }
 
     handleCheckboxChange(checkboxes) {
         this.setState({checkboxes: checkboxes});
+    }
+
+    handleSearch() {
         this.props.onChange(this.state);
     }
 
@@ -141,8 +141,12 @@ class OptionsMenu extends React.Component {
                     />
                 </div>
                 <div className="d-flex justify-content-center mt-2">
-                    <Button variant="primary" size="lg">
-                        Settings
+                    <Button 
+                        variant="primary" 
+                        size="lg"
+                        onClick={this.handleSearch.bind(this)}
+                        >
+                        Search
                     </Button>
                 </div>
             </div>

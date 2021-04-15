@@ -3,8 +3,10 @@ import { Circle, GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import { googleMapAPI } from '../config.json';
 import './Home.css';
 import OptionsMenu from './components/OptionsMenu';
-import API from '../API';
+import YelpAPI from '../APIs/YelpAPI';
+
 import InfoMenu from './components/InfoMenu';
+import Directions from './components/Directions';
 
 const mapOptions = {
     styles: [
@@ -56,13 +58,16 @@ class Map extends React.Component {
 
         for (let i = 0; i < options.checkboxes.length; i++) {
             if (options.checkboxes[i].value === true) {
-                queries.push(options.checkboxes[i].place);
+                queries.push(options.checkboxes[i].terms);
             }
         } 
 
-        let yelp = await API.getYelpPlacesMultiple(queries, this.state.currentLocation, this.state.circleOptions.radius);
-        console.log(yelp);
+        let yelp = await YelpAPI.getYelpPlacesMultiple(queries, this.state.currentLocation, this.state.circleOptions.radius);
         this.setState({places: yelp});
+    }
+
+    handleRadiusChange(radius) {
+        this.setState({circleOptions: {radius: Number(radius*1000)}});
     }
 
     handlePinClicked(location) {
@@ -118,6 +123,7 @@ class Map extends React.Component {
             />
             <OptionsMenu 
                 onChange={this.handleTrekOptionsUpdate.bind(this)}
+                onRadiusChange={this.handleRadiusChange.bind(this)}
             />
             <Marker 
                 position={this.state.currentLocation}
@@ -127,6 +133,13 @@ class Map extends React.Component {
                 center={this.state.currentLocation}
                 options={this.state.circleOptions}
             />
+
+            {/*
+            <Directions 
+                origin="1287 Treeland st"
+                destination="1433 Baldwin st"
+                travelMode="DRIVING"
+            />*/}
 
             {this.getAllPins()}
             <></>
