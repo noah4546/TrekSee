@@ -1,8 +1,7 @@
-import { googleMapAPI, yelpAPI } from './config.json';
+import { yelpAPI } from './config.json';
 
 const baseUrl = "https://treksee.tnoah.ca/php/";
 const proxy = "https://tnoah.ca:8888/";
-const placesAPIBaseUrl = `${proxy}https://maps.googleapis.com/maps/api/place/`;
 const yelpBaseUrl = `${proxy}https://api.yelp.com/v3/businesses/`;
 
 export default class API {

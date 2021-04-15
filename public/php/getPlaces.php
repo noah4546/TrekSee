@@ -17,7 +17,13 @@ if ($success) {
 
     while($row = $stmt->fetch()) {
 
-        array_push($json, $row['place']);
+        $place = [
+            "id" => $row['id'],
+            "place" => $row['place'],
+            "terms" => $row['terms'],
+        ];
+
+        array_push($json, $place);
 
     }
 

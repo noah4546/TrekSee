@@ -38,7 +38,7 @@ class InfoMenu extends React.Component {
     render() {
         return(
             <div>
-                {this.props.info ? this.getInfoWindow() : null}
+                {this.props.info.name ? this.getInfoWindow() : null}
             </div>
         );
     }

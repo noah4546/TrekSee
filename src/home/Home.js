@@ -25,45 +25,6 @@ const pinIcons = {
     gray: "https://www.google.ca/maps/vt/icon/name=assets/icons/poi/tactile/pinlet_shadow_v3-2-medium.png,assets/icons/poi/tactile/pinlet_outline_v3-2-medium.png,assets/icons/poi/tactile/pinlet_v3-2-medium.png,assets/icons/poi/quantum/pinlet/dot_pinlet-2-medium.png&highlight=ff000000,ffffff,78909c,ffffff?scale=1"
 };
 
-const CNTowerInfo = {
-    "id": "ef1ywilmP_yA_Ae_wD-mBQ",
-    "alias": "spencer-smith-park-burlington",
-    "name": "Spencer Smith Park",
-    "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/8y1FTizVAYXzUK03qjXR0w/o.jpg",
-    "is_closed": false,
-    "url": "https://www.yelp.com/biz/spencer-smith-park-burlington?adjust_creative=vvpjzzZkZX4FRpWnBayyGQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=vvpjzzZkZX4FRpWnBayyGQ",
-    "review_count": 12,
-    "categories": [
-        {
-            "alias": "parks",
-            "title": "Parks"
-        }
-    ],
-    "rating": 4.5,
-    "coordinates": {
-        "latitude": 43.3226051330566,
-        "longitude": -79.7984008789062
-    },
-    "transactions": [],
-    "location": {
-        "address1": "1400 Lakeshore Road",
-        "address2": "",
-        "address3": "",
-        "city": "Burlington",
-        "zip_code": "L7S 2J1",
-        "country": "CA",
-        "state": "ON",
-        "display_address": [
-            "1400 Lakeshore Road",
-            "Burlington, ON L7S 2J1",
-            "Canada"
-        ]
-    },
-    "phone": "",
-    "display_phone": "",
-    "distance": 2626.651736106663
-}
-
 class Map extends React.Component {
     constructor(props) {
         super(props);
@@ -82,7 +43,7 @@ class Map extends React.Component {
                 zIndex: 1
             },
             trekOptions: {},
-            selectedLocation: CNTowerInfo,
+            selectedLocation: {},
             places: []
         }
     }

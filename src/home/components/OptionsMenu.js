@@ -31,7 +31,9 @@ class PlacesForm extends React.Component {
 
         let checkboxes = places.map(place => {
             return {
-                place: place,
+                id: place.id,
+                place: place.place,
+                terms: place.terms,
                 value: false
             }
         });
