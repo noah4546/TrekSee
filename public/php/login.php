@@ -12,8 +12,13 @@ if (!isset($_SESSION['loggedIn']) || !isset($_SESSION['username'])) {
 }
 
 $username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_STRING);
+$password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_STRING);
 
 $_SESSION['loggedIn'] = true;
 $_SESSION['username'] = $username;
 
-var_dump($_SESSION);
+$json = [
+    "success" => true
+];
+
+echo json_encode($json);

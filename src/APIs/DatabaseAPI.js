@@ -26,18 +26,33 @@ export default class DatabaseAPI {
         } 
     }
 
-    static login(username) {
+    static async login(username, password) {
 
         let params = new URLSearchParams();
         params.append("username", username);
+        params.append("password", password);
 
-        fetch(`${baseUrl}login.php`, {
+        let response = await fetch(`${baseUrl}login.php`, {
             method: 'POST',
             mode: 'cors',
             body: params
-        })
-        .then(response => response.text())
-        .then(data => console.log(data));
+        });
+        return await response.json();
+    }
+
+    static async signup(username, password, email) {
+
+        let params = new URLSearchParams();
+        params.append("username", username);
+        params.append("password", password);
+        params.append("email", email);
+
+        let response = await fetch(`${baseUrl}signup.php`, {
+            method: 'POST',
+            mode: 'cors',
+            body: params
+        }); 
+        return await response.json();
     }
 
 }
