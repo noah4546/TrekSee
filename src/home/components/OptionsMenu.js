@@ -47,6 +47,7 @@ class PlacesForm extends React.Component {
         const places = this.state.checkboxes.map(checkbox => (
             <FormCheck 
                 key={checkbox.place}
+                id={checkbox.place}
                 label={checkbox.place} 
                 onChange={() => this.handleCheckboxChange(checkbox.place)}
                 defaultChecked={checkbox.value}

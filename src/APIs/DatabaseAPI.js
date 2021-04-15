@@ -26,4 +26,18 @@ export default class DatabaseAPI {
         } 
     }
 
+    static login(username) {
+
+        let params = new URLSearchParams();
+        params.append("username", username);
+
+        fetch(`${baseUrl}login.php`, {
+            method: 'POST',
+            mode: 'cors',
+            body: params
+        })
+        .then(response => response.text())
+        .then(data => console.log(data));
+    }
+
 }

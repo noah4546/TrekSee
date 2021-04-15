@@ -24,6 +24,7 @@ class App extends React.Component {
     }
 
     async componentDidMount() {
+        await DatabaseAPI.login("noah4546");
         console.log(await DatabaseAPI.getUser());
     }
 
