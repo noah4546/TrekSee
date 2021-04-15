@@ -5,6 +5,7 @@ import { Button, Form, FormControl, Nav, Navbar } from 'react-bootstrap';
 import Home from './home/Home';
 import { LinkContainer } from 'react-router-bootstrap';
 import './App.css';
+import Explore from './explore/Explore';
 
 class App extends React.Component {
 
@@ -18,13 +19,13 @@ class App extends React.Component {
                         <Route exact path="/">
                             <Home />
                         </Route>
-                        <Route path="/explore">
+                        <Route exact path="/explore">
+                            <Explore />
+                        </Route>
+                        <Route exact path="/history">
                             
                         </Route>
-                        <Route path="/history">
-                            
-                        </Route>
-                        <Route path="/saved">
+                        <Route exact path="/saved">
                             
                         </Route>
                     </Switch>

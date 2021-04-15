@@ -1,7 +1,7 @@
 import { googleMapAPI, yelpAPI } from './config.json';
 
 const baseUrl = "https://treksee.tnoah.ca/php/";
-const proxy = "http://tnoah.ca:8888/";
+const proxy = "https://tnoah.ca:8888/";
 const placesAPIBaseUrl = `${proxy}https://maps.googleapis.com/maps/api/place/`;
 const yelpBaseUrl = `${proxy}https://api.yelp.com/v3/businesses/`;
 
@@ -16,17 +16,6 @@ export default class API {
             console.log("Unable to connect to server, reverting to default places");
             return ["Art","Attractions","Event Spaces","Historical Buildings","Museums","Parks","Sports"];
         } 
-    }
-
-    static async getGooglePlaces(query, location, radius) {
-
-        if (radius == null || radius <= 0) return null;
-
-        let url = `${placesAPIBaseUrl}textsearch/json?query=${query}&location=${location.lat},${location.lng}&radius=${radius}&key=${googleMapAPI}`;
-        let response = await fetch(url);
-        let places = await response.json();
-        console.log(url);
-        return places;
     }
 
     static async getYelpPlaces(query, location, radius) {
@@ -59,4 +48,5 @@ export default class API {
 
         return places;
     }
+
 }
