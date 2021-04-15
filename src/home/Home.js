@@ -27,15 +27,19 @@ const pinIcons = {
     gray: "https://www.google.ca/maps/vt/icon/name=assets/icons/poi/tactile/pinlet_shadow_v3-2-medium.png,assets/icons/poi/tactile/pinlet_outline_v3-2-medium.png,assets/icons/poi/tactile/pinlet_v3-2-medium.png,assets/icons/poi/quantum/pinlet/dot_pinlet-2-medium.png&highlight=ff000000,ffffff,78909c,ffffff?scale=1"
 };
 
-class Map extends React.Component {
+class Home extends React.Component {
     constructor(props) {
         super(props);
 
+        let location = null;
+
+        if (this.props.customLocation !== null) {
+            location = this.props.customLocation;
+        }
+
         this.state = {
-            currentLocation: {
-                lat: 43.645831,
-                lng: -79.393641
-            },
+            currentLocation: location,
+            userAddedPins: this.props.userAddedPins,
             circleOptions: {
                 strokeColor: '#0022FF',
                 strokeOpacity: 0.5,
@@ -89,8 +93,26 @@ class Map extends React.Component {
         return pins;
     }
 
+    getUserAddedPins() {
+        if (this.state.userAddedPins.length > 0) {
+            let pins = this.state.userAddedPins.map(location => (
+                <Marker 
+                    key={Math.random()*10000}
+                    onClick={this.handlePinClicked.bind(this, location)}
+                    position={{
+                        lat: location.coordinates.latitude,
+                        lng: location.coordinates.longitude
+                    }}
+                />
+            ));
+
+            return pins;
+        }
+        return null;
+    }
+
     componentDidMount() {
-        if (navigator.geolocation) {
+        if (navigator.geolocation && this.state.currentLocation === null) {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
                     const pos = {
@@ -101,6 +123,11 @@ class Map extends React.Component {
                 },
                 () => {
                     window.alert("Unable to find location, location set to downtown Toronto");
+                    const pos = {
+                        lat: 43.645831,
+                        lng: -79.393641
+                    }
+                    this.setState({currentLocation: pos});
                 }
             )
         }
@@ -142,23 +169,12 @@ class Map extends React.Component {
             />*/}
 
             {this.getAllPins()}
+            {this.getUserAddedPins()}
             <></>
           </GoogleMap>
         </LoadScript>
       )
     }
-}
-
-class Home extends React.Component {
-
-    render() {
-        return(
-            <div>
-                <Map />        
-            </div>
-        )
-    }
-
 }
 
 export default Home;

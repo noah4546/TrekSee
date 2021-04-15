@@ -13,4 +13,17 @@ export default class DatabaseAPI {
         } 
     }
 
+    static async getUser() {
+        try {
+            let response = await fetch(`${baseUrl}getUser.php`);
+            let user = await response.json();
+            return user;
+        } catch (error) {
+            console.log("Unable to get user, defaulting to logged out");
+            return {
+                loggedIn: false
+            }
+        } 
+    }
+
 }

@@ -6,8 +6,27 @@ import Home from './home/Home';
 import { LinkContainer } from 'react-router-bootstrap';
 import './App.css';
 import Explore from './explore/Explore';
+import DatabaseAPI from './APIs/DatabaseAPI';
 
 class App extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            customLocation: {
+                lat: 43.335866,
+                lng: -79.82493
+            },
+            userAddedPins: []
+        }
+
+        
+    }
+
+    async componentDidMount() {
+        console.log(await DatabaseAPI.getUser());
+    }
+
 
     render() {
         return (
@@ -17,7 +36,10 @@ class App extends React.Component {
 
                     <Switch>
                         <Route exact path="/">
-                            <Home />
+                            <Home 
+                                customLocation={this.state.customLocation}
+                                userAddedPins={this.state.userAddedPins}
+                            />
                         </Route>
                         <Route path="/explore">
                             <Explore />
