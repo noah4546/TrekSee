@@ -116,10 +116,10 @@ class OptionsMenu extends React.Component {
     }
 
     render() {
-        if (!this.props.show) return null;
+        let display = (this.props.show) ? "d-none" : "d-block";
 
         return(
-            <div className="options-menu py-2">
+            <div className={"options-menu py-2 " + display}>
                 <h3 className="text-center">Find a Trek</h3>
                 <div className="mode-radius mx-4">
                     <div className="mode-select pt-3">

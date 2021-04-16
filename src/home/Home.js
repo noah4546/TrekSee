@@ -92,6 +92,7 @@ class Home extends React.Component {
 
     handlePinClicked(location) {
         this.setState({selectedLocation: location});
+        this.setState({mobile: {options: false,info: true,}});
     }
 
     getAllPins() {
