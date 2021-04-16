@@ -67,7 +67,7 @@ class OptionsMenu extends React.Component {
         super(props);
 
         this.state = {
-            mode: "walk",
+            mode: "WALKING",
             radius: 0,
             checkboxes: [],
             places: []
@@ -75,15 +75,22 @@ class OptionsMenu extends React.Component {
     }
 
     handleSelectWalk() {
-        this.setState({mode: "walk"});
+        this.setState({mode: "WALKING"});
+        this.handleModeChange("WALKING");
     }
 
     handleSelectBike() {
-        this.setState({mode: "bike"});
+        this.setState({mode: "BICYCLING"});
+        this.handleModeChange("BICYCLING");
     }
 
     handleSelectCar() {
-        this.setState({mode: "car"});
+        this.setState({mode: "DRIVING"});
+        this.handleModeChange("DRIVING");
+    }
+
+    handleModeChange(mode) {
+        this.props.onModeChange(mode);
     }
 
     async handleRadiusChange(event) {
@@ -93,7 +100,7 @@ class OptionsMenu extends React.Component {
             await this.setState({radius: radius});
         }
 
-        this.props.onRadiusChange(this.state.radius);
+        this.props.onRadiusChange(radius);
     }
 
     handleCheckboxChange(checkboxes) {
@@ -115,13 +122,13 @@ class OptionsMenu extends React.Component {
                 <div className="mode-select pt-3 mx-4">
                     <label>Mode</label>
                     <div className="mode-select-item" onClick={this.handleSelectWalk.bind(this)}>
-                        <Walk fill={this.state.mode === "walk" ? "blue" : "black"} />
+                        <Walk fill={this.state.mode === "WALKING" ? "blue" : "black"} />
                     </div>
                     <div className="mode-select-item" onClick={this.handleSelectBike.bind(this)}>
-                        <Bike fill={this.state.mode === "bike" ? "blue" : "black"} />
+                        <Bike fill={this.state.mode === "BIKING" ? "blue" : "black"} />
                     </div>
                     <div className="mode-select-item" onClick={this.handleSelectCar.bind(this)}>
-                        <Car fill={this.state.mode === "car" ? "blue" : "black"} />
+                        <Car fill={this.state.mode === "DRIVING" ? "blue" : "black"} />
                     </div>
                 </div>
                 <div className="radius-select row py-3 mx-4">

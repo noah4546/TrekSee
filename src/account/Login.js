@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, FormControl } from 'react-bootstrap';
 import DatabaseAPI from '../APIs/DatabaseAPI';
+import UserActions from '../APIs/UserActions';
 
 class Login extends React.Component {
     constructor(props) {
@@ -69,7 +70,7 @@ class Login extends React.Component {
         if (this.allValid()) {
             console.log(this.allValid());
 
-            let response = await DatabaseAPI.login(
+            let response = await UserActions.login(
                 this.state.email,
                 this.state.password
             );

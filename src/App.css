@@ -15,14 +15,20 @@
     padding: 5px 15px;
 }
 
-@media screen and (min-width: 1050px) {
-    .search {
-        min-width: 300px;
-    }
+.login-actions {
+    display: flex;
+    height: 38px;
 }
 
-@media screen and (min-width: 1200px) {
-    .search {
-        min-width: 450px;
-    }
+.login-actions .user p {
+    padding: 0;
+    margin: 0;
+}
+
+.login-actions .user {
+    margin-top: -5px;
+}
+
+.header-items .navbar-nav {
+    width: 280px;
 }

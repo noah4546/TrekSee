@@ -2,7 +2,7 @@
     position: absolute;
     top: 60px;
     right: 0px;
-    height: 525px;
+    height: auto;
     width: 300px;
     border: 1px solid #0022FF;
     border-radius: 20px 0 0 20px;

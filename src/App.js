@@ -9,16 +9,30 @@ import Explore from './explore/Explore';
 import DatabaseAPI from './APIs/DatabaseAPI';
 import Login from './account/Login';
 import Signup from './account/Signup';
+import UserActions from './APIs/UserActions';
+
+const overrideLoggedIn = false;
+const overrideUser = {
+    loggedIn: true,
+    firstName: "Test",
+    lastName: "User",
+    email: "test@example.com",
+    created: null
+};
+
+// Set to null to not override
+/*const overrideCustomLocation = {
+    lat: 43.335866,
+    lng: -79.82493
+}*/
+const overrideCustomLocation = null;
 
 class App extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            customLocation: {
-                lat: 43.335866,
-                lng: -79.82493
-            },
+            customLocation: null,
             userAddedPins: [],
             user: {
                 loggedIn: false,
@@ -31,13 +45,21 @@ class App extends React.Component {
     }
 
     async componentDidMount() {
-        let user = await DatabaseAPI.getUser()
-        this.setState({user: user});
-        console.log(user);
+        if (overrideLoggedIn) {
+            this.setState({user: overrideUser});
+        } else {
+            let user = await UserActions.getUser();
+            this.setState({user: user});
+            console.log(user);
+        }  
+
+        if (overrideCustomLocation !== null) {
+            this.setState({customLocation: overrideCustomLocation});
+        }
     }
 
     async handleLogout() {
-        DatabaseAPI.logout();
+        UserActions.logout();
 
         this.setState({
             user: {
@@ -92,30 +114,36 @@ class App extends React.Component {
 }
 
 class Header extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            search: ""
-        };
-    }
-
-    handleSearchChange(event) {
-        this.setState({search: event.target.value});
-    }
-
-    handleSearchSubmit() {
-        console.log(this.state.search);
-    }
-
     handleLogout() {
         this.props.onLogout();
+    }
+
+    getLocations() {
+        if (this.props.user.loggedIn) {
+            return(
+                <Nav className="mr-auto">
+                    <LinkContainer to="/explore"><Nav.Link>Explore</Nav.Link></LinkContainer>
+                    <LinkContainer to="/history"><Nav.Link>History</Nav.Link></LinkContainer>
+                    <LinkContainer to="/saved"><Nav.Link>Saved Treks</Nav.Link></LinkContainer>
+                </Nav>
+            );
+        } else {
+            return(
+                <Nav className="mr-auto">
+                    <LinkContainer to="/explore"><Nav.Link>Explore</Nav.Link></LinkContainer>
+                </Nav>
+            );
+        }
     }
 
     getUserActions() {
         if (this.props.user.loggedIn) {
             return(
                 <div className="login-actions">
+                    <div className="user mr-2">
+                        <p>Welcome</p>
+                        <p>{this.props.user.firstName} {this.props.user.lastName}</p>
+                    </div>
                     <LinkContainer to="/account" >
                         <Button variant="success">Account</Button>
                     </LinkContainer>
@@ -146,26 +174,8 @@ class Header extends React.Component {
                     <Navbar.Brand>TrekSee</Navbar.Brand>
                 </LinkContainer>   
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse>
-                    <Nav className="mr-auto">
-                        <LinkContainer to="/explore"><Nav.Link>Explore</Nav.Link></LinkContainer>
-                        <LinkContainer to="/history"><Nav.Link>History</Nav.Link></LinkContainer>
-                        <LinkContainer to="/saved"><Nav.Link>Saved Treks</Nav.Link></LinkContainer>
-                    </Nav>
-                    <Form inline className="mr-4">
-                        <FormControl 
-                            type="text" 
-                            placeholder="Search" 
-                            className="mr-2 search"
-                            value={this.state.search}
-                            onChange={this.handleSearchChange.bind(this)}
-                            />
-                        <Button 
-                            variant="outline-success"
-                            onClick={this.handleSearchSubmit.bind(this)}
-                        >Search</Button>
-                    </Form>
-    
+                <Navbar.Collapse className="header-items">
+                    {this.getLocations()}
                     {this.getUserActions()}
                 </Navbar.Collapse>
             </Navbar>

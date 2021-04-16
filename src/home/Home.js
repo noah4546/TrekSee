@@ -6,6 +6,7 @@ import OptionsMenu from './components/OptionsMenu';
 import YelpAPI from '../APIs/YelpAPI';
 
 import InfoMenu from './components/InfoMenu';
+import Directions from './components/Directions';
 
 const mapOptions = {
     styles: [
@@ -48,8 +49,15 @@ class Home extends React.Component {
                 zIndex: 1
             },
             trekOptions: {},
-            selectedLocation: {},
-            places: []
+            selectedLocation: null,
+            places: [],
+            directionsOn: false,
+            directions: {
+                origin: null,
+                destination: null,
+                travelMode: null,
+            },
+            directionsJSX: null,
         }
     }
 
@@ -67,6 +75,10 @@ class Home extends React.Component {
 
         let yelp = await YelpAPI.getYelpPlacesMultiple(queries, this.state.currentLocation, this.state.circleOptions.radius);
         this.setState({places: yelp});
+    }
+
+    handleModeUpdate(mode) {
+        this.setState({trekOptions: {mode: mode}});
     }
 
     handleRadiusChange(radius) {
@@ -110,6 +122,50 @@ class Home extends React.Component {
         return null;
     }
 
+    getDirections() {
+        let directions = this.state.directions;
+
+        console.log(this.state.trekOptions.mode);
+
+        if (this.state.directionsOn && 
+            directions.destination !== null &&
+            directions.origin !== null) {
+            return (
+                <Directions 
+                    destination={directions.destination}
+                    origin={directions.origin}
+                    travelMode={this.state.trekOptions.mode}
+                    onClearDirections={this.handleClearDirections.bind(this)}
+                />
+            );
+        } else {
+            return null;
+        }
+    }
+
+    handleStartTrek() {
+        this.setState({
+            directionsOn: true,
+            directions: {
+                destination: {
+                    lat: this.state.selectedLocation.coordinates.latitude,
+                    lng: this.state.selectedLocation.coordinates.longitude
+                },
+                origin: this.state.currentLocation
+            }
+        });
+    }
+    
+    handleClearDirections() {
+        this.setState({
+            directionsOn: false,
+            directions: {
+                destination: null,
+                origin: null
+            }
+        });
+    }
+
     componentDidMount() {
         if (navigator.geolocation && this.state.currentLocation === null) {
             navigator.geolocation.getCurrentPosition(
@@ -133,46 +189,43 @@ class Home extends React.Component {
     }
 
     render() {
-      return (
-        <LoadScript
-          googleMapsApiKey={googleMapAPI}
-        >
-          <GoogleMap
-            mapContainerClassName="map"
-            center={this.state.currentLocation}
-            zoom={15}
-            options={mapOptions}
-          >
-
-            <InfoMenu 
-                info={this.state.selectedLocation}
-            />
-            <OptionsMenu 
-                onChange={this.handleTrekOptionsUpdate.bind(this)}
-                onRadiusChange={this.handleRadiusChange.bind(this)}
-            />
-            <Marker 
-                position={this.state.currentLocation}
-                icon={pinIcons.gray}
-            />
-            <Circle 
+        return (
+            <LoadScript
+                googleMapsApiKey={googleMapAPI}
+            >
+                <GoogleMap
+                mapContainerClassName="map"
                 center={this.state.currentLocation}
-                options={this.state.circleOptions}
-            />
+                zoom={15}
+                options={mapOptions}
+                >
 
-            {/*
-            <Directions 
-                origin="1287 Treeland st"
-                destination="1433 Baldwin st"
-                travelMode="DRIVING"
-            />*/}
+                <InfoMenu 
+                    info={this.state.selectedLocation}
+                    onStartTrek={this.handleStartTrek.bind(this)}
+                />
+                <OptionsMenu 
+                    onChange={this.handleTrekOptionsUpdate.bind(this)}
+                    onRadiusChange={this.handleRadiusChange.bind(this)}
+                    onModeChange={this.handleModeUpdate.bind(this)}
+                />
+                <Marker 
+                    position={this.state.currentLocation}
+                    icon={pinIcons.gray}
+                />
+                <Circle 
+                    center={this.state.currentLocation}
+                    options={this.state.circleOptions}
+                />
 
-            {this.getAllPins()}
-            {this.getUserAddedPins()}
-            <></>
-          </GoogleMap>
-        </LoadScript>
-      )
+                {this.getDirections()}
+
+                {this.getAllPins()}
+                {this.getUserAddedPins()}
+                <></>
+                </GoogleMap>
+            </LoadScript>
+        )
     }
 }
 

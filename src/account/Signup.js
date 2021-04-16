@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, FormCheck, FormControl } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import DatabaseAPI from '../APIs/DatabaseAPI';
+import UserActions from '../APIs/UserActions';
 import './LoginSignup.css';
 
 class Signup extends React.Component {
@@ -118,7 +119,7 @@ class Signup extends React.Component {
 
         if (this.allValid()) {
             
-            let response = await DatabaseAPI.signup(
+            let response = await UserActions.signup(
                 this.state.firstName,
                 this.state.lastName,
                 this.state.password,
