@@ -39,7 +39,7 @@ class App extends React.Component {
         console.log(user);
     }
 
-    handleLogout() {
+    async handleLogout() {
         DatabaseAPI.logout();
 
         let user = await DatabaseAPI.getUser()
