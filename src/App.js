@@ -34,7 +34,7 @@ class App extends React.Component {
         await DatabaseAPI.login("test@example.com", "12345678");
 
         let user = await DatabaseAPI.getUser()
-        //this.setState({user: user});
+        this.setState({user: user});
 
         console.log(user);
     }
