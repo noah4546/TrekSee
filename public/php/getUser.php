@@ -7,14 +7,14 @@ header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
 
 session_start();
 
-if (!isset($_SESSION['loggedIn']) || !isset($_SESSION['username'])) {
+if (!isset($_SESSION['loggedIn']) || !isset($_SESSION['email'])) {
     $_SESSION['loggedIn'] = false;
-    $_SESSION['username'] = "";
+    $_SESSION['email'] = "";
 }
 
 $json = [
     "loggedIn" => $_SESSION['loggedIn'],
-    "username" => $_SESSION['username']
+    "username" => $_SESSION['email']
 ];
 
 echo json_encode($json);

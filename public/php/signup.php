@@ -8,9 +8,9 @@ session_start();
 
 require_once './config.php';
 
-if (!isset($_SESSION['loggedIn']) || !isset($_SESSION['username'])) {
+if (!isset($_SESSION['loggedIn']) || !isset($_SESSION['email'])) {
     $_SESSION['loggedIn'] = false;
-    $_SESSION['username'] = "";
+    $_SESSION['email'] = "";
 }
 $firstName = filter_input(INPUT_POST, "firstName", FILTER_SANITIZE_STRING);
 $lastName = filter_input(INPUT_POST, "lastName", FILTER_SANITIZE_STRING);
@@ -23,7 +23,7 @@ $userCreated = false;
 
 $json = [
     "success" => false,
-    "error" => ["Unknown"]
+    "errors" => ["Unknown"]
 ];
 
 if ($email === null || empty($email)) {

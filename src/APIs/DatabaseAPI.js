@@ -26,10 +26,10 @@ export default class DatabaseAPI {
         } 
     }
 
-    static async login(username, password) {
+    static async login(email, password) {
 
         let params = new URLSearchParams();
-        params.append("username", username);
+        params.append("email", email);
         params.append("password", password);
 
         let response = await fetch(`${baseUrl}login.php`, {
@@ -54,6 +54,21 @@ export default class DatabaseAPI {
             body: params
         }); 
         return await response.json();
+    }
+
+    static async login(email, password) {
+
+        let params = new URLSearchParams();
+        params.append("email", email);
+        params.append("password", password);
+
+        let response = await fetch(`${baseUrl}login.php`, {
+            method: 'POST',
+            mode: 'cors',
+            body: params
+        }); 
+        return await response.json();
+
     }
 
 }
