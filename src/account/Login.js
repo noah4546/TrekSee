@@ -75,7 +75,7 @@ class Login extends React.Component {
             );
     
             if (response.success) {
-                window.history.back();
+                window.location.href = "/";
             } else {
 
                 let errors = "";
