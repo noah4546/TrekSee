@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button, FormCheck, FormControl } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import DatabaseAPI from '../APIs/DatabaseAPI';
 import UserActions from '../APIs/UserActions';
 import './LoginSignup.css';
 

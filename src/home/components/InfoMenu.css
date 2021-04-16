@@ -1,6 +1,5 @@
 .info-menu {
     position: absolute;
-    top: 60px;
     left: 0px;
     height: auto;
     width: 350px;
@@ -30,12 +29,18 @@
     border-bottom: 1px solid #707070;
 }
 
+@media only screen and (min-width: 1201px) {
+    .info-menu {
+        top: 60px;
+    }
+}
+
 @media only screen and (max-width: 1200px) {
 
     .info-menu {
-        top: calc(60vh - 62px);
+        position: fixed;
         bottom: 0;
-        height: auto;
+        height: 380px;
         width: 50%;
         border: 1px solid #0022FF;
         border-radius:  0;
@@ -68,6 +73,7 @@
     .info-menu {
         width: 100%;
         bottom: 65px;
+        height: auto;
     }
 
     .info-menu img {

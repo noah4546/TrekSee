@@ -1,6 +1,5 @@
 .options-menu {
     position: absolute;
-    top: 60px;
     right: 0px;
     height: auto;
     width: 300px;
@@ -52,11 +51,17 @@
     margin-left: 8px;
 }
 
+@media only screen and (min-width: 1201px) {
+    .options-menu {
+        top: 60px;
+    }
+}
+
 @media only screen and (max-width: 1200px) {
     .options-menu {
-        top: calc(60vh - 62px);
-        bottom: 0px;
-        height: auto;
+        position: fixed;
+        bottom: 0;
+        height: 380px;
         width: 50%;
         border: 1px solid #0022FF;
         border-radius: 0;
@@ -79,6 +84,7 @@
     .options-menu {
         width: 100%;
         bottom: 65px;
+        height: auto;
     }
 
     .options-menu h3 {

@@ -7,7 +7,6 @@ import YelpAPI from '../APIs/YelpAPI';
 
 import InfoMenu from './components/InfoMenu';
 import Directions from './components/Directions';
-import { render } from '@testing-library/react';
 import { Button } from 'react-bootstrap';
 
 const mapOptions = {

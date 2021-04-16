@@ -1,7 +1,6 @@
 import { DirectionsRenderer, DirectionsService } from '@react-google-maps/api';
 import React from 'react';
 import { Button } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
 import './Directions.css';
 
 class Directions extends React.Component {
