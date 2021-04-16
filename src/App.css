@@ -9,7 +9,8 @@
     color: black!important;
 }
 
-.login-actions a {
+.login-actions a,
+.login-actions button {
     margin-left: 15px;
     padding: 5px 15px;
 }

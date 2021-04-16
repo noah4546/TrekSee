@@ -34,7 +34,7 @@ class App extends React.Component {
         await DatabaseAPI.login("test@example.com", "12345678");
 
         let user = await DatabaseAPI.getUser()
-        this.setState({user: user});
+        //this.setState({user: user});
 
         console.log(user);
     }
@@ -42,9 +42,15 @@ class App extends React.Component {
     async handleLogout() {
         DatabaseAPI.logout();
 
-        let user = await DatabaseAPI.getUser()
-        this.setState({user: user});
-        console.log(user);
+        this.setState({
+            user: {
+                loggedIn: false,
+                firstName: "",
+                lastName: "",
+                email: "",
+                created: null
+            }
+        });
     }
 
     render() {
@@ -75,7 +81,9 @@ class App extends React.Component {
                         <Route path="/login">
                             <Login />
                         </Route>
-                        <Route path="/signup" component={Signup} />
+                        <Route path="/signup">
+                            <Signup />
+                        </Route>
                         <Route path="/account">
                             
                         </Route>
@@ -114,9 +122,10 @@ class Header extends React.Component {
                     <LinkContainer to="/account" >
                         <Button variant="success">Account</Button>
                     </LinkContainer>
-                    <LinkContainer to="/">
-                        <Button variant="primary">Logout</Button>
-                    </LinkContainer>     
+                    <Button 
+                        variant="primary"
+                        onClick={this.handleLogout.bind(this)}
+                    >Logout</Button>   
                 </div>
             );
         } else {
@@ -126,10 +135,7 @@ class Header extends React.Component {
                         <Button variant="success">Login</Button>
                     </LinkContainer>
                     <LinkContainer to="/signup">
-                        <Button 
-                            variant="primary"
-                            onClick={this.handleLogout.bind(this)}
-                        >Signup</Button>
+                        <Button variant="primary">Signup</Button>
                     </LinkContainer>  
                 </div>
             );

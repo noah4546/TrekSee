@@ -72,7 +72,7 @@ class Signup extends React.Component {
         this.setState({terms: (!this.state.terms)});
     }
 
-    checkValid() {
+    async checkValid() {
         let firstName = (this.state.firstName.length > 0);
         let lastName = (this.state.lastName.length > 0);
         let email = (this.state.email.length > 0);
@@ -103,16 +103,18 @@ class Signup extends React.Component {
     }
 
     allValid() {
-        return (this.state.validation.firstName &&
-                this.state.validation.lastName &&
-                this.state.validation.email &&
-                this.state.validation.password &&
-                this.state.validation.passwordConfirm &&
+        let validation = this.state.validation;
+
+        return (validation.firstName &&
+                validation.lastName &&
+                validation.email &&
+                validation.password &&
+                validation.passwordConfirm &&
                 this.state.terms)
     }
 
     async handleSubmit() {
-        this.checkValid();
+        await this.checkValid();
 
         if (this.allValid()) {
             
@@ -124,7 +126,7 @@ class Signup extends React.Component {
             );
 
             if (response.success) {
-                this.componentWillUnmount();
+                window.history.back();
             } else {
                 let errors = "";
 
@@ -144,10 +146,6 @@ class Signup extends React.Component {
         if (this.state.validationOn) {
             this.checkValid();
         }
-    }
-
-    componentWillUnmount() {
-        this.props.history.push('/');
     }
 
     render() {
