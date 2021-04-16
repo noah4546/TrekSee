@@ -21,7 +21,7 @@ class App extends React.Component {
             },
             userAddedPins: [],
             user: {
-                loggedIn: true,
+                loggedIn: false,
                 firstName: "",
                 lastName: "",
                 email: "",
@@ -34,8 +34,16 @@ class App extends React.Component {
         await DatabaseAPI.login("test@example.com", "12345678");
 
         let user = await DatabaseAPI.getUser()
-        //this.setState({user: user});
+        this.setState({user: user});
 
+        console.log(user);
+    }
+
+    handleLogout() {
+        DatabaseAPI.logout();
+
+        let user = await DatabaseAPI.getUser()
+        this.setState({user: user});
         console.log(user);
     }
 
@@ -43,7 +51,10 @@ class App extends React.Component {
         return (
             <Router>
                 <div>
-                    <Header user={this.state.user} />
+                    <Header 
+                        user={this.state.user}
+                        onLogout={this.handleLogout.bind(this)}
+                    />
 
                     <Switch>
                         <Route exact path="/">
@@ -93,7 +104,7 @@ class Header extends React.Component {
     }
 
     handleLogout() {
-        DatabaseAPI.logout();
+        this.props.onLogout();
     }
 
     getUserActions() {
