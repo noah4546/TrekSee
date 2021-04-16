@@ -40,10 +40,11 @@ export default class DatabaseAPI {
         return await response.json();
     }
 
-    static async signup(username, password, email) {
+    static async signup(firstName, lastName, password, email) {
 
         let params = new URLSearchParams();
-        params.append("username", username);
+        params.append("firstName", firstName);
+        params.append("lastName", lastName);
         params.append("password", password);
         params.append("email", email);
 

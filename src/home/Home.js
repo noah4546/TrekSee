@@ -6,7 +6,6 @@ import OptionsMenu from './components/OptionsMenu';
 import YelpAPI from '../APIs/YelpAPI';
 
 import InfoMenu from './components/InfoMenu';
-import Directions from './components/Directions';
 
 const mapOptions = {
     styles: [

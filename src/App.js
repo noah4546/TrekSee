@@ -19,15 +19,23 @@ class App extends React.Component {
                 lat: 43.335866,
                 lng: -79.82493
             },
-            userAddedPins: []
+            userAddedPins: [],
+            user: {
+                loggedIn: false,
+                firstName: "",
+                lastName: "",
+                email: "",
+            }
         }
 
         
     }
 
     async componentDidMount() {
-        console.log(await DatabaseAPI.signup("test", "password", "test@example.com"));
-        console.log(await DatabaseAPI.getUser());
+        let user = await DatabaseAPI.getUser()
+        this.setState({user: user});
+
+        console.log(user);
     }
 
 
@@ -56,9 +64,7 @@ class App extends React.Component {
                         <Route path="/login">
                             <Login />
                         </Route>
-                        <Route path="/signup">
-                            <Signup />
-                        </Route>
+                        <Route path="/signup" component={Signup} />
                         <Route path="/account">
                             
                         </Route>

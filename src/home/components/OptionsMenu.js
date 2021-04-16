@@ -50,7 +50,7 @@ class PlacesForm extends React.Component {
                 id={checkbox.place}
                 label={checkbox.place} 
                 onChange={() => this.handleCheckboxChange(checkbox.place)}
-                defaultChecked={checkbox.value}
+                checked={checkbox.value}
             />
         ));
 
