@@ -56,19 +56,7 @@ export default class DatabaseAPI {
         return await response.json();
     }
 
-    static async login(email, password) {
-
-        let params = new URLSearchParams();
-        params.append("email", email);
-        params.append("password", password);
-
-        let response = await fetch(`${baseUrl}login.php`, {
-            method: 'POST',
-            mode: 'cors',
-            body: params
-        }); 
-        return await response.json();
-
+    static logout() {
+        fetch(`${baseUrl}logout.php`);
     }
-
 }

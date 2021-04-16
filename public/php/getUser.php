@@ -14,7 +14,10 @@ if (!isset($_SESSION['loggedIn']) || !isset($_SESSION['email'])) {
 
 $json = [
     "loggedIn" => $_SESSION['loggedIn'],
-    "username" => $_SESSION['email']
+    "firstName" => $_SESSION['firstName'],
+    "lastName" => $_SESSION['lastName'],
+    "email" => $_SESSION['email'],
+    "created" => $_SESSION['created']
 ];
 
 echo json_encode($json);

@@ -21,31 +21,29 @@ class App extends React.Component {
             },
             userAddedPins: [],
             user: {
-                loggedIn: false,
+                loggedIn: true,
                 firstName: "",
                 lastName: "",
                 email: "",
+                created: null
             }
-        }
-
-        
+        }      
     }
 
     async componentDidMount() {
         await DatabaseAPI.login("test@example.com", "12345678");
 
         let user = await DatabaseAPI.getUser()
-        this.setState({user: user});
+        //this.setState({user: user});
 
         console.log(user);
     }
-
 
     render() {
         return (
             <Router>
                 <div>
-                    <Header />
+                    <Header user={this.state.user} />
 
                     <Switch>
                         <Route exact path="/">
@@ -94,6 +92,39 @@ class Header extends React.Component {
         console.log(this.state.search);
     }
 
+    handleLogout() {
+        DatabaseAPI.logout();
+    }
+
+    getUserActions() {
+        if (this.props.user.loggedIn) {
+            return(
+                <div className="login-actions">
+                    <LinkContainer to="/account" >
+                        <Button variant="success">Account</Button>
+                    </LinkContainer>
+                    <LinkContainer to="/">
+                        <Button variant="primary">Logout</Button>
+                    </LinkContainer>     
+                </div>
+            );
+        } else {
+            return(
+                <div className="login-actions">
+                    <LinkContainer to="/login" >
+                        <Button variant="success">Login</Button>
+                    </LinkContainer>
+                    <LinkContainer to="/signup">
+                        <Button 
+                            variant="primary"
+                            onClick={this.handleLogout.bind(this)}
+                        >Signup</Button>
+                    </LinkContainer>  
+                </div>
+            );
+        }
+    }
+
     render() {
         return(
             <Navbar bg="light" expand="lg" className="shadow p-2 bg-body rounded">
@@ -121,14 +152,7 @@ class Header extends React.Component {
                         >Search</Button>
                     </Form>
     
-                    <div className="login-actions">
-                        <LinkContainer to="/login" >
-                            <Button variant="success">Login</Button>
-                        </LinkContainer>
-                        <LinkContainer to="/signup">
-                            <Button variant="primary">Signup</Button>
-                        </LinkContainer>  
-                    </div>
+                    {this.getUserActions()}
                 </Navbar.Collapse>
             </Navbar>
         );
