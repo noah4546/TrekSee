@@ -15,16 +15,20 @@ class InfoMenu extends React.Component {
         return(
             <div className="info-menu p-3">
                 <h3 className="text-center">{this.props.info.name}</h3>
-                <img src={this.props.info.image_url} alt={this.props.info.name} />
-                <h5>{type}</h5>
-                <div className="info-menu-contact">
-                    <p>{this.props.info.is_closed ? "Closed" : "Open Now"}</p>
-                    <p>
-                        <a href={this.props.info.url} target="_blank" rel="noreferrer">
-                            Website
-                        </a>
-                    </p>
-                    {this.props.info.phone !== "" ? <p>Phone: {this.props.info.phone}</p> : null}
+                <div className="info-small">
+                    <img src={this.props.info.image_url} alt={this.props.info.name} />
+                    <div className="info-right">
+                        <h5>{type}</h5>
+                        <div className="info-menu-contact">
+                            <p>{this.props.info.is_closed ? "Closed" : "Open Now"}</p>
+                            <p>
+                                <a href={this.props.info.url} target="_blank" rel="noreferrer">
+                                    Website
+                                </a>
+                            </p>
+                            {this.props.info.phone !== "" ? <p>Phone: {this.props.info.phone}</p> : null}
+                        </div>
+                    </div>
                 </div>
                 <div className="d-flex justify-content-center mt-2">
                     <Button 
@@ -39,6 +43,8 @@ class InfoMenu extends React.Component {
     }
 
     render() {
+        if (!this.props.show) return null;
+
         return(
             <div>
                 {this.props.info !== null && this.getInfoWindow()}

@@ -7,6 +7,8 @@ import YelpAPI from '../APIs/YelpAPI';
 
 import InfoMenu from './components/InfoMenu';
 import Directions from './components/Directions';
+import { render } from '@testing-library/react';
+import { Button } from 'react-bootstrap';
 
 const mapOptions = {
     styles: [
@@ -58,6 +60,10 @@ class Home extends React.Component {
                 travelMode: null,
             },
             directionsJSX: null,
+            mobile: {
+                options: false,
+                info: false,
+            }
         }
     }
 
@@ -166,6 +172,22 @@ class Home extends React.Component {
         });
     }
 
+    handleMobileChange(show) {
+        if (show === 'options') {
+            if (this.state.mobile.options) {
+                this.setState({mobile: {options: false,info: false,}});
+            } else {
+                this.setState({mobile: {options: true,info: false,}});
+            } 
+        } else if (show === 'info') {
+            if (this.state.mobile.info) {
+                this.setState({mobile: {options: false,info: false,}});
+            } else {
+                this.setState({mobile: {options: false,info: true,}});
+            }
+        }
+    }
+
     componentDidMount() {
         if (navigator.geolocation && this.state.currentLocation === null) {
             navigator.geolocation.getCurrentPosition(
@@ -189,6 +211,15 @@ class Home extends React.Component {
     }
 
     render() {
+        let showOptions = true;
+        let showInfo = true;
+        
+        if (window.innerWidth <= 700) {
+            showOptions = this.state.mobile.options;
+            showInfo = this.state.mobile.info;
+            console.log("mobile");
+        }
+
         return (
             <LoadScript
                 googleMapsApiKey={googleMapAPI}
@@ -200,14 +231,20 @@ class Home extends React.Component {
                 options={mapOptions}
                 >
 
-                <InfoMenu 
-                    info={this.state.selectedLocation}
-                    onStartTrek={this.handleStartTrek.bind(this)}
-                />
                 <OptionsMenu 
                     onChange={this.handleTrekOptionsUpdate.bind(this)}
                     onRadiusChange={this.handleRadiusChange.bind(this)}
                     onModeChange={this.handleModeUpdate.bind(this)}
+                    show={showOptions}
+                />
+                <InfoMenu 
+                    info={this.state.selectedLocation}
+                    onStartTrek={this.handleStartTrek.bind(this)}
+                    show={showInfo}
+                />
+                <MobileSwitch 
+                    onClick={this.handleMobileChange.bind(this)}
+                    selectedLocation={this.state.selectedLocation}
                 />
                 <Marker 
                     position={this.state.currentLocation}
@@ -227,6 +264,46 @@ class Home extends React.Component {
             </LoadScript>
         )
     }
+}
+
+class MobileSwitch extends React.Component {
+
+    getBoth() {
+        return(
+            <div className="mobile-switch mobile-switch-both">
+                <div className="d-flex justify-content-center">
+                    <Button
+                        onClick={this.props.onClick.bind(this, 'info')}
+                    >Place Info</Button>
+                </div>
+                <div className="d-flex justify-content-center">
+                    <Button
+                        onClick={this.props.onClick.bind(this, 'options')}
+                    >Find a Trek</Button>
+                </div>
+            </div>
+        );
+    }
+
+    getTrek() {
+        return(
+            <div className="mobile-switch">
+                <div className="d-flex justify-content-center">
+                    <Button
+                        onClick={this.props.onClick.bind(this, 'options')}
+                    >Find a Trek</Button>
+                </div>
+            </div>
+        );
+    }
+
+    render() {
+        if (this.props.selectedLocation == null) {
+            return this.getTrek();
+        } else {
+            return this.getBoth();
+        }  
+    } 
 }
 
 export default Home;

@@ -116,34 +116,38 @@ class OptionsMenu extends React.Component {
     }
 
     render() {
+        if (!this.props.show) return null;
+
         return(
             <div className="options-menu py-2">
                 <h3 className="text-center">Find a Trek</h3>
-                <div className="mode-select pt-3 mx-4">
-                    <label>Mode</label>
-                    <div className="mode-select-item" onClick={this.handleSelectWalk.bind(this)}>
-                        <Walk fill={this.state.mode === "WALKING" ? "blue" : "black"} />
+                <div className="mode-radius mx-4">
+                    <div className="mode-select pt-3">
+                        <label>Mode</label>
+                        <div className="mode-select-item" onClick={this.handleSelectWalk.bind(this)}>
+                            <Walk fill={this.state.mode === "WALKING" ? "blue" : "black"} />
+                        </div>
+                        <div className="mode-select-item" onClick={this.handleSelectBike.bind(this)}>
+                            <Bike fill={this.state.mode === "BIKING" ? "blue" : "black"} />
+                        </div>
+                        <div className="mode-select-item" onClick={this.handleSelectCar.bind(this)}>
+                            <Car fill={this.state.mode === "DRIVING" ? "blue" : "black"} />
+                        </div>
                     </div>
-                    <div className="mode-select-item" onClick={this.handleSelectBike.bind(this)}>
-                        <Bike fill={this.state.mode === "BIKING" ? "blue" : "black"} />
-                    </div>
-                    <div className="mode-select-item" onClick={this.handleSelectCar.bind(this)}>
-                        <Car fill={this.state.mode === "DRIVING" ? "blue" : "black"} />
+                    <div className="radius-select py-3">
+                        <label className="mt-1 mr-2">Radius</label>
+                        <FormControl 
+                            type="number"
+                            value={this.state.radius}
+                            className="mr-2"
+                            step="0.2"
+                            onChange={this.handleRadiusChange.bind(this)}
+                        />
+                        <label className="pt-1">Km</label>
                     </div>
                 </div>
-                <div className="radius-select row py-3 mx-4">
-                    <label className="col-4 pt-1">Radius</label>
-                    <FormControl 
-                        type="number"
-                        value={this.state.radius}
-                        className="col-5"
-                        step="0.2"
-                        onChange={this.handleRadiusChange.bind(this)}
-                    />
-                    <label className="col-3 pt-1">Km</label>
-                </div>
-                <div className="places-select py-2 mx-4">
-                    <p className="text-center">Places</p>
+                <div className="places-select py-2">
+                    <p className="text-center places-label">Places</p>
                     <PlacesForm 
                         onChange={this.handleCheckboxChange.bind(this)}
                     />
