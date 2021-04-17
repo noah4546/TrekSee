@@ -24,6 +24,8 @@ if (isset($_SESSION['id']) && $paramsOk) {
     $params = [$_SESSION['id']];
     $success = $stmt->execute($params);
 
+    var_dump($success);
+
     if ($success) {
 
         if ($stmt->rowCount() == 1) {
@@ -33,7 +35,9 @@ if (isset($_SESSION['id']) && $paramsOk) {
                         WHERE `user_id`=?";
             $stmt = $dbh->prepare($command);
             $params = [$lat, $lng, $_SESSION['id']];
-            $stmt->execute($params);
+            $success = $stmt->execute($params);
+
+            var_dump($success);
 
         } else {
 
@@ -41,7 +45,9 @@ if (isset($_SESSION['id']) && $paramsOk) {
                         VALUES (?,?,?)";
             $stmt = $dbh->prepare($command);
             $params = [$lat, $lng, $_SESSION['id']];
-            $stmt->execute($params);
+            $success = $stmt->execute($params);
+
+            var_dump($success);
 
         }      
     }

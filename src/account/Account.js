@@ -33,19 +33,20 @@ class Account extends React.Component {
 
     async handleSubmit() {
         let location = this.state.location;
+        let r = "d";
 
         if (location.lat === 0 && location.lng === 0) {
-            UserActions.updateLatLng(
+            r = await UserActions.updateLatLng(
                 null,
                 null
             );
         } else {
-            UserActions.updateLatLng(
+            r = await UserActions.updateLatLng(
                 location.lat,
                 location.lng
             );
         }
-
+        console.log(r);
         
 
         this.getUser();

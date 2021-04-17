@@ -49,16 +49,17 @@ export default class UserActions {
         fetch(`${baseUrl}logout.php`);
     }
 
-    static updateLatLng(lat, lng) {
+    static async updateLatLng(lat, lng) {
 
         let params = new URLSearchParams();
         params.append("lat", lat);
         params.append("lng", lng);
 
-        fetch(`${baseUrl}updateLatLng.php`, {
+        let response = await fetch(`${baseUrl}updateLatLng.php`, {
             method: 'POST',
             mode: 'cors',
             body: params
         }); 
+        return await response.text();
     }
 }
