@@ -90,6 +90,7 @@ class Account extends React.Component {
                         <tr>
                             <td><b>Location</b></td>
                             <td>
+                                <p>Set both values to 0 to reset</p>
                                 <div className="d-flex">
                                     <p className="mt-1 mr-3"><b>Lat:</b></p>
                                     <FormControl 
