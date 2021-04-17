@@ -9,6 +9,7 @@ import Explore from './explore/Explore';
 import Login from './account/Login';
 import Signup from './account/Signup';
 import UserActions from './APIs/UserActions';
+import Account from './account/Account';
 
 const overrideLoggedIn = false;
 const overrideUser = {
@@ -81,7 +82,7 @@ class App extends React.Component {
                             <Signup />
                         </Route>
                         <Route path="/account">
-                            
+                            <Account />
                         </Route>
                     </Switch>
                 </div>
