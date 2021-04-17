@@ -58,6 +58,7 @@ if ($paramsOK) {
                 session_start();
 
                 $_SESSION['loggedIn'] = true;
+                $_SESSION['id'] = $id;
                 $_SESSION['firstName'] = $firstName;
                 $_SESSION['lastName'] = $lastName;
                 $_SESSION['email'] = $email;

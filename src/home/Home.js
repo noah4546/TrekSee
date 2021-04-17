@@ -92,7 +92,13 @@ class Home extends React.Component {
 
     handlePinClicked(location) {
         this.setState({selectedLocation: location});
-        this.setState({mobile: {options: false,info: true,}});
+
+        if (window.innerWidth <= 700) {
+            this.setState({mobile: {options: false,info: true,}});
+        } else {
+            this.setState({mobile: {options: true,info: true,}});
+        }
+        
     }
 
     getAllPins() {
@@ -111,7 +117,7 @@ class Home extends React.Component {
     }
 
     getUserAddedPins() {
-        if (this.state.userAddedPins.length > 0) {
+        if (this.state.userAddedPins && this.state.userAddedPins.length > 0) {
             let pins = this.state.userAddedPins.map(location => (
                 <Marker 
                     key={Math.random()*10000}
@@ -130,8 +136,6 @@ class Home extends React.Component {
 
     getDirections() {
         let directions = this.state.directions;
-
-        console.log(this.state.trekOptions.mode);
 
         if (this.state.directionsOn && 
             directions.destination !== null &&
@@ -217,7 +221,6 @@ class Home extends React.Component {
         if (window.innerWidth <= 700) {
             showOptions = this.state.mobile.options;
             showInfo = this.state.mobile.info;
-            console.log("mobile");
         }
 
         return (
@@ -225,10 +228,10 @@ class Home extends React.Component {
                 googleMapsApiKey={googleMapAPI}
             >
                 <GoogleMap
-                mapContainerClassName="map"
-                center={this.state.currentLocation}
-                zoom={15}
-                options={mapOptions}
+                    mapContainerClassName="map"
+                    center={this.state.currentLocation}
+                    zoom={15}
+                    options={mapOptions}
                 >
 
                 <OptionsMenu 

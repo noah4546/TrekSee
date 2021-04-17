@@ -63,8 +63,7 @@ if ($paramsOk) {
 
             if ($success) {
 
-                $_SESSION['loggedIn'] = true;
-                $_SESSION['email'] = $email;
+                session_destroy();
                 $userCreated = true;
 
             } else {

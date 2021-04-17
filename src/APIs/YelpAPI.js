@@ -38,4 +38,24 @@ export default class YelpAPI {
         return places;
     }
 
+    static async getYelpPlaceById(yelp_id) {
+
+        try {
+            let url = `${yelpBaseUrl}${yelp_id}`;
+            let response = await fetch(url, {
+                headers: {
+                    "Authorization": yelpAPI
+                }
+            });
+    
+            let json = await response.json()
+    
+            if (json.error) return null;
+    
+            return json;
+        } catch {
+            return null;
+        }
+    }
+
 }

@@ -116,7 +116,7 @@ class OptionsMenu extends React.Component {
     }
 
     render() {
-        let display = (this.props.show) ? "d-none" : "d-block";
+        let display = (this.props.show) ? "d-block" : "d-none";
 
         return(
             <div className={"options-menu py-2 " + display}>

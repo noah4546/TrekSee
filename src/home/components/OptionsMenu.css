@@ -54,6 +54,13 @@
 @media only screen and (min-width: 1201px) {
     .options-menu {
         top: 60px;
+        display: block!important;
+    }
+}
+
+@media only screen and (min-width: 701px) {
+    .options-menu {
+        display: block!important;
     }
 }
 

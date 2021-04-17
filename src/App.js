@@ -1,12 +1,11 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Button, Form, FormControl, Nav, Navbar } from 'react-bootstrap';
+import { Button, Nav, Navbar } from 'react-bootstrap';
 import Home from './home/Home';
 import { LinkContainer } from 'react-router-bootstrap';
 import './App.css';
 import Explore from './explore/Explore';
-import DatabaseAPI from './APIs/DatabaseAPI';
 import Login from './account/Login';
 import Signup from './account/Signup';
 import UserActions from './APIs/UserActions';
@@ -33,7 +32,6 @@ class App extends React.Component {
 
         this.state = {
             customLocation: null,
-            userAddedPins: [],
             user: {
                 loggedIn: false,
                 firstName: "",
@@ -50,7 +48,10 @@ class App extends React.Component {
         } else {
             let user = await UserActions.getUser();
             this.setState({user: user});
-            console.log(user);
+
+            if (user.location !== null) {
+                this.setState({customLocation: user.location});
+            }
         }  
 
         if (overrideCustomLocation !== null) {
@@ -85,17 +86,10 @@ class App extends React.Component {
                         <Route exact path="/">
                             <Home 
                                 customLocation={this.state.customLocation}
-                                userAddedPins={this.state.userAddedPins}
                             />
                         </Route>
                         <Route path="/explore">
                             <Explore />
-                        </Route>
-                        <Route path="/history">
-
-                        </Route>
-                        <Route path="/saved">
-                            
                         </Route>
                         <Route path="/login">
                             <Login />
@@ -116,24 +110,6 @@ class App extends React.Component {
 class Header extends React.Component {
     handleLogout() {
         this.props.onLogout();
-    }
-
-    getLocations() {
-        if (this.props.user.loggedIn) {
-            return(
-                <Nav className="mr-auto">
-                    <LinkContainer to="/explore"><Nav.Link>Explore</Nav.Link></LinkContainer>
-                    <LinkContainer to="/history"><Nav.Link>History</Nav.Link></LinkContainer>
-                    <LinkContainer to="/saved"><Nav.Link>Saved Treks</Nav.Link></LinkContainer>
-                </Nav>
-            );
-        } else {
-            return(
-                <Nav className="mr-auto">
-                    <LinkContainer to="/explore"><Nav.Link>Explore</Nav.Link></LinkContainer>
-                </Nav>
-            );
-        }
     }
 
     getUserActions() {
@@ -175,7 +151,9 @@ class Header extends React.Component {
                 </LinkContainer>   
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse className="header-items">
-                    {this.getLocations()}
+                    <Nav className="mr-auto">
+                        <LinkContainer to="/explore"><Nav.Link>Explore</Nav.Link></LinkContainer>
+                    </Nav>
                     {this.getUserActions()}
                 </Navbar.Collapse>
             </Navbar>

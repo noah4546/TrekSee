@@ -12,4 +12,10 @@ export default class DatabaseAPI {
             return ["Art","Attractions","Event Spaces","Historical Buildings","Museums","Parks","Sports"];
         } 
     }
+
+    static async getExplore() {
+        let response = await fetch(`${baseUrl}getExplore.php`);
+        let places = await response.json();
+        return places;
+    }
 }

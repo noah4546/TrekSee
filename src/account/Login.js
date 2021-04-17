@@ -48,7 +48,6 @@ class Login extends React.Component {
                 }
             });
         }
-        console.log(this.state.validation);
     }
 
     allValid() {
@@ -67,7 +66,6 @@ class Login extends React.Component {
         await this.checkValid();
 
         if (this.allValid()) {
-            console.log(this.allValid());
 
             let response = await UserActions.login(
                 this.state.email,
