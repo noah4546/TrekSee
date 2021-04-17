@@ -187,25 +187,7 @@ class Home extends React.Component {
         }
     }
 
-    async componentDidMount() {
-        let user = await UserActions.getUser();
-        
-        if (user.location !== null) {
-            
-            let lat = Number(user.location.lat);
-            let lng = Number(user.location.lng);
-
-            if (lat !== 0 && lng !== 0) {
-                this.setState({currentLocation: {
-                    lat: lat,
-                    lng: lng,
-                }});
-            }
-
-            console.log(this.state.currentLocation);
-            return;
-        }
-
+    getGeolocation() {
         if (navigator.geolocation && this.state.currentLocation === null) {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
@@ -225,6 +207,26 @@ class Home extends React.Component {
                 }
             )
         }
+    }
+
+    async componentDidMount() {
+        let user = await UserActions.getUser();
+        
+        if (user.location !== null) {
+            
+            let lat = Number(user.location.lat);
+            let lng = Number(user.location.lng);
+
+            if (lat !== 0 && lng !== 0) {
+                this.setState({currentLocation: {
+                    lat: lat,
+                    lng: lng,
+                }});
+            } else {
+                this.getGeolocation();
+            }   
+        }
+        this.getGeolocation();
     }
 
     render() {
