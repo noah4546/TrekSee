@@ -8,10 +8,8 @@ class Account extends React.Component {
 
         this.state = {
             user: null,
-            location: {
-                lat: "",
-                lng: ""
-            }
+            lat: "",
+            lng: ""
         }
     }
 
@@ -19,7 +17,7 @@ class Account extends React.Component {
         let lat = event.target.value;
 
         if (lat >= -90 && lat <= 90) {
-            this.setState({location: {lat: lat}});
+            this.setState({lat: lat});
         }
     }
 
@@ -27,25 +25,26 @@ class Account extends React.Component {
         let lng = event.target.value;
 
         if (lng >= -180 && lng <= 180) {
-            this.setState({location: {lng: lng}});
+            this.setState({lng: lng});
         } 
     }
 
     async handleSubmit() {
-        let location = this.state.location;
+        let lat = this.state.lat;
+        let lng = this.state.lng;
         let r = "d";
 
-        if (location.lat === 0 && location.lng === 0) {
+        if (lat === 0 && lng === 0) {
             r = await UserActions.updateLatLng(
                 null,
                 null
             );
         } else {
             r = await UserActions.updateLatLng(
-                location.lat,
-                location.lng
+                lat,
+                lng
             );
-            console.log(location);
+            console.log(lat + ", " + lng);
         }
         console.log(r);
         
@@ -95,7 +94,7 @@ class Account extends React.Component {
                                     <p className="mt-1 mr-3"><b>Lat:</b></p>
                                     <FormControl 
                                         type="number"
-                                        value={this.state.location.lat}
+                                        value={this.state.lat}
                                         onChange={this.handleLatUpdate.bind(this)}
                                     />
                                 </div>
@@ -103,7 +102,7 @@ class Account extends React.Component {
                                     <p className="mt-1 mr-3"><b>Lng:</b></p>
                                     <FormControl 
                                         type="number"
-                                        value={this.state.location.lng}
+                                        value={this.state.lng}
                                         onChange={this.handleLngUpdate.bind(this)}
                                     />
                                 </div>
