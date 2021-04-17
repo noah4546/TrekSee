@@ -8,8 +8,8 @@ session_start();
 
 require_once './config.php';
 
-$lat = filter_input(INPUT_POST, "lat", FILTER_VALIDATE_FLOAT);
-$lng = filter_input(INPUT_POST, "lng", FILTER_VALIDATE_FLOAT);
+$lat = filter_input(INPUT_POST, "lat", FILTER_SANITIZE_STRING);
+$lng = filter_input(INPUT_POST, "lng", FILTER_SANITIZE_STRING);
 
 $paramsOk = true;
 
