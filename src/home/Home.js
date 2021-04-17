@@ -192,10 +192,13 @@ class Home extends React.Component {
         
         if (user.location !== null) {
             
-            if (user.location.lat !== 0 && user.location.lng !== 0) {
+            let lat = Number(user.location.lat);
+            let lng = Number(user.location.lng);
+
+            if (lat !== 0 && lng !== 0) {
                 this.setState({currentLocation: {
-                    lat: Number(user.location.lat),
-                    lng: Number(user.location.lng),
+                    lat: lat,
+                    lng: lng,
                 }});
             }
 
