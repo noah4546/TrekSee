@@ -13,6 +13,9 @@ $lng = filter_input(INPUT_POST, "lng", FILTER_SANITIZE_STRING);
 
 $paramsOk = true;
 
+var_dump($lat);
+var_dump($lng);
+
 if (!isset($_SESSION['loggedIn']) || !isset($_SESSION['email'])) {
     $_SESSION['loggedIn'] = false;
     $_SESSION['email'] = "";
@@ -31,7 +34,7 @@ if (isset($_SESSION['id']) && $paramsOk) {
         if ($stmt->rowCount() == 1) {
 
             $command = "UPDATE `user_location` 
-                        SET lat=?, lng=?
+                        SET `lat`=?, `lng`=?
                         WHERE `user_id`=?";
             $stmt = $dbh->prepare($command);
             $params = [$lat, $lng, $_SESSION['id']];

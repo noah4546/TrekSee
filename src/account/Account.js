@@ -45,6 +45,7 @@ class Account extends React.Component {
                 location.lat,
                 location.lng
             );
+            console.log(location);
         }
         console.log(r);
         
