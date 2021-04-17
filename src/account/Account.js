@@ -58,7 +58,10 @@ class Account extends React.Component {
         console.log(user);
 
         if (user.location !== null) {
-            this.setState({location: user.location});
+            this.setState({
+                lat: user.location.lat,
+                lng: user.location.lng,
+            });
         }
     }
 
