@@ -49,6 +49,8 @@ class App extends React.Component {
             let user = await UserActions.getUser();
             this.setState({user: user});
 
+            console.log(user);
+
             if (user.location !== null) {
                 this.setState({customLocation: user.location});
             }

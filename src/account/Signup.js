@@ -126,7 +126,7 @@ class Signup extends React.Component {
             );
 
             if (response.success) {
-                window.location.href = "/";
+                window.location.href = "/login";
             } else {
                 let errors = "";
 
