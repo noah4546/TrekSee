@@ -8,6 +8,7 @@ import YelpAPI from '../APIs/YelpAPI';
 import InfoMenu from './components/InfoMenu';
 import Directions from './components/Directions';
 import { Button } from 'react-bootstrap';
+import UserActions from '../APIs/UserActions';
 
 const mapOptions = {
     styles: [
@@ -32,14 +33,8 @@ class Home extends React.Component {
     constructor(props) {
         super(props);
 
-        let location = null;
-
-        if (this.props.customLocation !== null) {
-            location = this.props.customLocation;
-        }
-
         this.state = {
-            currentLocation: location,
+            currentLocation: null,
             userAddedPins: this.props.userAddedPins,
             circleOptions: {
                 strokeColor: '#0022FF',
@@ -192,7 +187,14 @@ class Home extends React.Component {
         }
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        let user = await UserActions.getUser();
+        
+        if (user.location !== null) {
+            this.setState({currentLocation: user.location});
+            return;
+        }
+
         if (navigator.geolocation && this.state.currentLocation === null) {
             navigator.geolocation.getCurrentPosition(
                 (position) => {

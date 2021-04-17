@@ -19,13 +19,6 @@ const overrideUser = {
     created: null
 };
 
-// Set to null to not override
-/*const overrideCustomLocation = {
-    lat: 43.335866,
-    lng: -79.82493
-}*/
-const overrideCustomLocation = null;
-
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -48,17 +41,7 @@ class App extends React.Component {
         } else {
             let user = await UserActions.getUser();
             this.setState({user: user});
-
-            console.log(user);
-
-            if (user.location !== null) {
-                this.setState({customLocation: user.location});
-            }
         }  
-
-        if (overrideCustomLocation !== null) {
-            this.setState({customLocation: overrideCustomLocation});
-        }
     }
 
     async handleLogout() {
@@ -86,9 +69,7 @@ class App extends React.Component {
 
                     <Switch>
                         <Route exact path="/">
-                            <Home 
-                                customLocation={this.state.customLocation}
-                            />
+                            <Home />
                         </Route>
                         <Route path="/explore">
                             <Explore />
